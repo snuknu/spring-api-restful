@@ -1,4 +1,4 @@
-package lawroom.com.br.spring_api_restful.medico;
+package lawroom.com.br.spring_api_restful.domain.medico;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

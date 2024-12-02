@@ -1,4 +1,4 @@
-package lawroom.com.br.spring_api_restful.domains;
+package lawroom.com.br.spring_api_restful.domain.endereco;
 
 import java.util.Optional;
 import jakarta.persistence.Embeddable;

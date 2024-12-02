@@ -1,6 +1,6 @@
-package lawroom.com.br.spring_api_restful.medico;
+package lawroom.com.br.spring_api_restful.domain.paciente;
 
-import lawroom.com.br.spring_api_restful.domains.EnderecoDtoRead;
+import lawroom.com.br.spring_api_restful.domain.endereco.EnderecoDtoRead;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,26 +10,23 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class MedicoDtoRead {
+public class PacienteDtoRead {
 
   private Long id;
   private String nome;
   private String email;
   private String telefone;
-  private String crm;
-  private Especialidade especialidade;
+  private String cpf;
   private EnderecoDtoRead endereco;
   private Boolean active;
 
-  public MedicoDtoRead(Medico entity) {
+  public PacienteDtoRead(Paciente entity) {
     this.id = entity.getId();
     this.nome = entity.getNome();
     this.email = entity.getEmail();
     this.telefone = entity.getTelefone();
-    this.crm = entity.getCrm();
-    this.especialidade = entity.getEspecialidade();
+    this.cpf = entity.getCpf();
     this.endereco = new EnderecoDtoRead(entity.getEndereco());
     this.active = entity.getActive();
   }
-
 }

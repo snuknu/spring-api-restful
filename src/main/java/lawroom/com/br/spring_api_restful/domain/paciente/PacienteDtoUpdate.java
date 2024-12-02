@@ -1,8 +1,8 @@
-package lawroom.com.br.spring_api_restful.paciente;
+package lawroom.com.br.spring_api_restful.domain.paciente;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import lawroom.com.br.spring_api_restful.domains.EnderecoDtoUpdate;
+import lawroom.com.br.spring_api_restful.domain.endereco.EnderecoDtoUpdate;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

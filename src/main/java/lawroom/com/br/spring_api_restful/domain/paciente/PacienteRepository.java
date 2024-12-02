@@ -1,4 +1,4 @@
-package lawroom.com.br.spring_api_restful.paciente;
+package lawroom.com.br.spring_api_restful.domain.paciente;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

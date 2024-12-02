@@ -1,14 +1,16 @@
-package lawroom.com.br.spring_api_restful.paciente;
+package lawroom.com.br.spring_api_restful.domain.medico;
 
 import java.util.Optional;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.Valid;
-import lawroom.com.br.spring_api_restful.domains.Endereco;
+import lawroom.com.br.spring_api_restful.domain.endereco.Endereco;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -20,9 +22,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-@Entity(name = "paciente")
-@Table(name = "pacientes")
-public class Paciente {
+@Entity(name = "Medico")
+@Table(name = "medicos")
+public class Medico {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,23 +32,27 @@ public class Paciente {
   private String nome;
   private String email;
   private String telefone;
-  private String cpf;
+  private String crm;
+
+  @Enumerated(EnumType.STRING)
+  private Especialidade especialidade;
 
   @Embedded
   private Endereco endereco;
 
   private Boolean active;
 
-  public Paciente(PacienteDtoCreate dto) {
+  public Medico(MedicoDtoCreate dto) {
     this.active = Boolean.TRUE;
     this.nome = dto.getNome();
     this.email = dto.getEmail();
     this.telefone = dto.getTelefone();
-    this.cpf = dto.getEmail();
+    this.crm = dto.getCrm();
+    this.especialidade = dto.getEspecialidade();
     this.endereco = new Endereco(dto.getEndereco());
   }
 
-  public void update(@Valid PacienteDtoUpdate dto) {
+  public void update(@Valid MedicoDtoUpdate dto) {
     Optional.ofNullable(dto.getNome()).ifPresent(value -> this.nome = value);
     Optional.ofNullable(dto.getTelefone()).ifPresent(value -> this.telefone = value);
     Optional.ofNullable(dto.getEndereco()).ifPresent(value -> this.endereco.update(value));

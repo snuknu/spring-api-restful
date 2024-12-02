@@ -1,4 +1,4 @@
-package lawroom.com.br.spring_api_restful.medico;
+package lawroom.com.br.spring_api_restful.domain.paciente;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,41 +18,48 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("medicos")
-public class MedicoController {
+@RequestMapping("pacientes")
+public class PacienteController {
 
   @Autowired
-  private MedicoRepository repository;
+  private PacienteRepository repository;
 
   @PostMapping
   @Transactional
-  public ResponseEntity<MedicoDtoRead> create(@RequestBody @Valid MedicoDtoCreate dto,
+  public ResponseEntity<PacienteDtoRead> create(@RequestBody @Valid PacienteDtoCreate dto,
       UriComponentsBuilder uriBuilder) {
-    var entity = new Medico(dto);
+    var entity = new Paciente(dto);
     repository.save(entity);
-    var uri = uriBuilder.path("/medicos/{id}").buildAndExpand(entity.getId()).toUri();
-    return ResponseEntity.created(uri).body(new MedicoDtoRead(entity));
+    var uri = uriBuilder.path("pacientes/{id}").buildAndExpand(entity.getId()).toUri();
+    return ResponseEntity.created(uri).body(new PacienteDtoRead(entity));
+
   }
 
   @GetMapping
-  public ResponseEntity<Page<MedicoDtoRead>> read(Pageable pageable) {
-    var page = repository.findAll(pageable).map(MedicoDtoRead::new);
+  public ResponseEntity<Page<PacienteDtoRead>> read(Pageable pageable) {
+    var page = repository.findAll(pageable).map(PacienteDtoRead::new);
     return ResponseEntity.ok(page);
   }
 
   @GetMapping(path = "/short")
-  public ResponseEntity<Page<MedicoDtoReadShort>> readShort(
+  public ResponseEntity<Page<PacienteDtoReadShort>> readShort(
       @PageableDefault(size = 6, page = 0, sort = {"id"}) Pageable pageable) {
-    var page = repository.findAllByActiveTrue(pageable).map(MedicoDtoReadShort::new);
+    var page = repository.findAllByActiveTrue(pageable).map(PacienteDtoReadShort::new);
     return ResponseEntity.ok(page);
   }
 
+  @GetMapping(path = "/{id}")
+  public ResponseEntity<PacienteDtoRead> readDetail(@PathVariable Long id) {
+    var entity = repository.getReferenceById(id);
+    return ResponseEntity.ok(new PacienteDtoRead(entity));
+  }
+  
   @PutMapping
   @Transactional
-  public ResponseEntity<MedicoDtoRead> update(@RequestBody @Valid MedicoDtoUpdate dto) {
+  public ResponseEntity<PacienteDtoRead> update(@RequestBody @Valid PacienteDtoUpdate dto) {
     var entity = repository.getReferenceById(dto.getId());
     entity.update(dto);
-    return ResponseEntity.ok(new MedicoDtoRead(entity));
+    return ResponseEntity.ok(new PacienteDtoRead(entity));
   }
 
   @DeleteMapping("/{id}")
